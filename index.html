@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rodrisa Ray - AI Image Generator</title>
-  <meta name="description" content="Generate AI images using Craiyon with a modern interactive interface.">
+  <meta name="description" content="Generate AI images using Craiyon with a modern interactive landing page.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset */
+    /* Reset & Global Styles */
     * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
     body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
     a { text-decoration: none; color: inherit; }
@@ -71,7 +71,7 @@
       <h2>AI Image Generator</h2>
       <iframe 
           class="craiyon-frame" 
-          src="https://www.craiyon.com/en" 
+          src="https://www.craiyon.com/embed" 
           loading="lazy" 
           title="Craiyon AI Image Generator">
       </iframe>
@@ -98,7 +98,10 @@
         "move": { "enable": true, "speed": 2 }
       },
       "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }
+        "events": { 
+          "onhover": { "enable": true, "mode": "repulse" }, 
+          "onclick": { "enable": true, "mode": "push" } 
+        }
       },
       "retina_detect": true
     });
