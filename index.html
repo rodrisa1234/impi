@@ -4,125 +4,148 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rodrisa Ray - AI Image Generator</title>
-  <meta name="description" content="Generate AI images using Craiyon with a modern interactive landing page.">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Styles -->
   <style>
-    /* Reset & Global Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
-    body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
-    a { text-decoration: none; color: inherit; }
-    iframe { width: 100%; border: none; border-radius: 12px; }
+    :root {
+      --bg-color-light: #f0f0f0;
+      --bg-color-dark: #121212;
+      --text-color-light: #121212;
+      --text-color-dark: #f0f0f0;
+      --button-bg-light: #007bff;
+      --button-bg-dark: #1e90ff;
+    }
 
-    /* Dark/Light Mode */
-    body.dark { background: #1a1a2e; color: #eee; }
-    body.dark header, body.dark section { background: #162447; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    body.dark footer { color: #bbb; }
-    body.dark .toggle-btn { background: #eee; color: #1a1a2e; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
 
-    /* Container */
-    .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 2rem 0; }
+    body.light {
+      background: var(--bg-color-light);
+      color: var(--text-color-light);
+    }
 
-    /* Header */
-    header { background: #4F46E5; color: #fff; padding: 2rem 0; text-align: center; border-radius: 12px; }
-    header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-    header p { font-size: 1rem; }
+    body.dark {
+      background: var(--bg-color-dark);
+      color: var(--text-color-dark);
+    }
 
-    /* Toggle Button */
-    .toggle-btn { position: fixed; top: 1rem; right: 1rem; padding: 0.5rem 1rem; background: #4F46E5; color: #fff; border-radius: 8px; cursor: pointer; font-weight: 600; z-index: 999; }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
 
-    /* Sections */
-    section { margin: 2rem 0; padding: 2rem; background: #fff; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); opacity: 0; transform: translateY(50px); }
-    section h2 { margin-bottom: 1rem; font-size: 1.5rem; color: #4F46E5; text-align: center; }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
 
-    /* Craiyon iframe */
-    .craiyon-frame { height: 600px; }
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      color: #fff;
+      background-color: var(--button-bg-light);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-    /* Footer */
-    footer { text-align: center; padding: 2rem 0; font-size: 0.9rem; color: #555; }
+    body.dark .btn {
+      background-color: var(--button-bg-dark);
+    }
 
-    /* Particle canvas */
-    #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
 
-    /* Responsive */
-    @media (max-width:768px) {
-      section { padding: 1rem; }
+    /* Mobile-first font scaling */
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+      .btn {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Canvas for particles */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
   </style>
 </head>
-<body>
+<body class="light">
 
-  <!-- Particles Background -->
+  <!-- Particle background -->
   <div id="particles-js"></div>
 
-  <!-- Dark/Light Toggle -->
-  <div class="toggle-btn" id="themeToggle">Dark Mode</div>
+  <!-- Content -->
+  <div class="container">
+    <h1>Rodrisa Ray AI Image Generator</h1>
+    <a href="https://www.craiyon.com" target="_blank" rel="noopener noreferrer" class="btn">Open Craiyon</a>
+  </div>
 
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <h1>Rodrisa Ray</h1>
-      <p>Generate AI Images Using Craiyon</p>
-    </div>
-  </header>
+  <!-- Dark/Light Mode Toggle -->
+  <button class="toggle-btn" onclick="toggleMode()">Toggle Dark/Light</button>
 
-  <!-- Craiyon AI Section -->
-  <section>
-    <div class="container">
-      <h2>AI Image Generator</h2>
-      <iframe 
-          class="craiyon-frame" 
-          src="https://www.craiyon.com/user/account/collection" 
-          loading="lazy" 
-          title="Craiyon AI Image Generator">
-      </iframe>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Rodrisa Ray | All Rights Reserved</p>
-  </footer>
-
-  <!-- Scripts -->
+  <!-- Particles.js library -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
-    // Initialize particles.js
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 80 },
-        "color": { "value": "#4F46E5" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 3 },
-        "line_linked": { "enable": true, "distance": 150, "color": "#4F46E5", "opacity": 0.4, "width": 1 },
-        "move": { "enable": true, "speed": 2 }
-      },
-      "interactivity": {
-        "events": { 
-          "onhover": { "enable": true, "mode": "repulse" }, 
-          "onclick": { "enable": true, "mode": "push" } 
-        }
-      },
-      "retina_detect": true
-    });
-
-    // Scroll fade-in animation
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.2 });
-    sections.forEach(section => observer.observe(section));
-
     // Dark/Light mode toggle
-    const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('click', () => {
+    function toggleMode() {
       document.body.classList.toggle('dark');
-      toggle.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+      document.body.classList.toggle('light');
+    }
+
+    // Particles.js configuration
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, bounce: false }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" }
+        },
+        modes: {
+          repulse: { distance: 100 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
     });
   </script>
 
