@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Brand – AI Image Generator</title>
-<meta name="description" content="Cloudflare landing page integrating Craiyon.com with mobile-first, responsive design.">
+<title>Your Brand – AI Marketing Landing Page</title>
+<meta name="description" content="Cloudflare landing page with Craiyon AI embed, Google Form leads, Zaraz tracking, mobile-first responsive design.">
 <meta name="theme-color" content="#0d9488">
 
 <style>
@@ -17,6 +17,7 @@
     flex-direction: column;
     min-height: 100vh;
   }
+
   header {
     background: #0d9488;
     color: white;
@@ -28,11 +29,11 @@
 
   main {
     flex: 1;
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
     padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
 
@@ -41,14 +42,29 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   iframe {
     width: 100%;
-    height: 600px;
+    height: 500px;
     border: none;
     border-radius: 8px;
   }
+
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #0d9488;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover { background: #0b7d75; }
 
   footer {
     background: #111827;
@@ -58,16 +74,17 @@
     font-size: 0.875rem;
   }
 
-  @media (max-width: 600px) {
-    header h1 { font-size: 1.5rem; }
-    header p { font-size: 1rem; }
-    iframe { height: 500px; }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    iframe { height: 400px; }
   }
 
   @media (prefers-color-scheme: dark) {
     body { background: #111827; color: #f3f4f6; }
     header { background: #14b8a6; }
-    .card { background: #1f2937; }
+    .card { background: #1f2937; color: #f3f4f6; }
+    button { background: #14b8a6; }
+    button:hover { background: #0f786f; }
     footer { background: #0f172a; color: #e5e7eb; }
   }
 </style>
@@ -75,30 +92,52 @@
 <body>
   <header>
     <h1>Your Brand</h1>
-    <p>Generate AI images instantly with Craiyon.com</p>
+    <p>AI Image Generation + Lead Capture with Cloudflare Pages Free Plan</p>
   </header>
 
   <main>
+    <!-- Left: Craiyon AI -->
     <div class="card">
       <h2>AI Image Generator</h2>
-      <p>Use Craiyon AI to generate creative images directly in your landing page. Enter prompts and enjoy AI art.</p>
-      <!-- Craiyon embed via iframe -->
+      <p>Generate creative AI images instantly using Craiyon.com:</p>
       <iframe src="https://www.craiyon.com/embed" title="Craiyon AI Image Generator"></iframe>
+      <button onclick="track('craiyon_generate_click',{source:'landing_page'})">Generate Image</button>
     </div>
 
+    <!-- Right: Google Form -->
     <div class="card">
-      <h2>Why Choose This Page?</h2>
-      <ul>
-        <li>✔ Fully responsive & mobile-first layout</li>
-        <li>✔ Clean modern design with light/dark mode</li>
-        <li>✔ Ready for Cloudflare Pages free plan</li>
-        <li>✔ Simple integration with AI image generation</li>
-      </ul>
+      <h2>Join Our Mailing List</h2>
+      <p>Fill in the form below to receive updates, tips, and resources.</p>
+      <!-- Replace YOUR_FORM_ID with your actual Google Form ID -->
+      <iframe class="gform" src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" title="Google Form Lead Capture"></iframe>
+      <button onclick="track('form_submit_click',{source:'landing_page'})">Submit Form</button>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 Your Brand. Built with Cloudflare Pages Free Plan.</p>
+    <p>© 2025 Your Brand. Built with Cloudflare Pages Free Plan</p>
   </footer>
+
+  <!-- Zaraz Tracking Shim -->
+  <script>
+    window.zaraz = window.zaraz || {trackQueue: [], track: function(event, data={}) { this.trackQueue.push([event,data]); }};
+    function track(event, data={}) {
+      try {
+        if(window.zaraz && typeof window.zaraz.track === 'function') {
+          window.zaraz.track(event, data);
+        } else {
+          window.zaraz = window.zaraz || {trackQueue: []};
+          window.zaraz.trackQueue.push([event,data]);
+          console.log('Zaraz queued:', event, data);
+        }
+      } catch(e){ console.warn('track error', e); }
+    }
+
+    // Track when Google Form iframe loads
+    document.addEventListener('DOMContentLoaded', function(){
+      const gform = document.querySelector('iframe.gform');
+      if(gform){ gform.addEventListener('load', ()=> track('google_form_loaded')); }
+    });
+  </script>
 </body>
 </html>
