@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Brand – AI Image Generator</title>
+<meta name="description" content="Cloudflare landing page integrating Craiyon.com with mobile-first, responsive design.">
+<meta name="theme-color" content="#0d9488">
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #f9fafb;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: #0d9488;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  header h1 { margin: 0; font-size: 2rem; }
+  header p { margin: 0.5rem 0 0; font-size: 1.125rem; }
+
+  main {
+    flex: 1;
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+
+  iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 8px;
+  }
+
+  footer {
+    background: #111827;
+    color: #f3f4f6;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    header p { font-size: 1rem; }
+    iframe { height: 500px; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #111827; color: #f3f4f6; }
+    header { background: #14b8a6; }
+    .card { background: #1f2937; }
+    footer { background: #0f172a; color: #e5e7eb; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Your Brand</h1>
+    <p>Generate AI images instantly with Craiyon.com</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>AI Image Generator</h2>
+      <p>Use Craiyon AI to generate creative images directly in your landing page. Enter prompts and enjoy AI art.</p>
+      <!-- Craiyon embed via iframe -->
+      <iframe src="https://www.craiyon.com/embed" title="Craiyon AI Image Generator"></iframe>
+    </div>
+
+    <div class="card">
+      <h2>Why Choose This Page?</h2>
+      <ul>
+        <li>✔ Fully responsive & mobile-first layout</li>
+        <li>✔ Clean modern design with light/dark mode</li>
+        <li>✔ Ready for Cloudflare Pages free plan</li>
+        <li>✔ Simple integration with AI image generation</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Your Brand. Built with Cloudflare Pages Free Plan.</p>
+  </footer>
+</body>
+</html>
